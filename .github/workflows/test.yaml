@@ -1,0 +1,21 @@
+name: test building image
+on:
+  pull_request:
+    branches:
+      - stage
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: docker/build-push-action
+        with:
+          context: .
+          build-args: |
+            NPM_TOKEN:${{ GH_TOKEN }}
+          push: false
+          tags: frontend:${{ github.sha }}

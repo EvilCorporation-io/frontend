@@ -1,0 +1,26 @@
+name: build and publish image
+on:
+  release:
+    types: [created]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: docker/login-action
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GH_TOKEN }}
+
+      - uses: docker/build-push-action
+        with:
+          context: .
+          build-args: |
+            NPM_TOKEN:${{ GH_TOKEN }}
+          push: true
+          tags: frontend:${{ github.sha }}
