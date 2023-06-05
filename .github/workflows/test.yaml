@@ -15,5 +15,5 @@ jobs:
           context: .
           build-args: |
             NPM_TOKEN=${{ secrets.GH_TOKEN }}
-          push: false
-          tags: frontend:${{ github.sha }}
+          push: true
+          tags: ghcr.io/evilcorporation-io/frontend:${{ github.sha }}
